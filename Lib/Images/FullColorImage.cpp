@@ -107,6 +107,7 @@ FullColorImage::createImage(
 void
 FullColorImage::drawSample()
 {
+    fillRectangle( 0,  0, this->m_iWidth, this->m_iHeight, 0x00FFFFFF);
 }
 
 //========================================================================
@@ -126,6 +127,20 @@ FullColorImage::fillRectangle(
         const  int  y2,
         const  int  color)
 {
+    const   unsigned  char  cB  = ( color        & 0xFF);
+    const   unsigned  char  cG  = ((color >>  8) & 0xFF);
+    const   unsigned  char  cR  = ((color >> 16) & 0xFF);
+
+    for ( int y = y1; y < y2; ++ y ) {
+        unsigned char * ptr = getPixel(x1, y);
+        for ( int x = x1; x < x2; ++ x ) {
+            *(ptr ++) = cB;
+            *(ptr ++) = cG;
+            *(ptr ++) = cR;
+        }
+    }
+
+    return;
 }
 
 //========================================================================
