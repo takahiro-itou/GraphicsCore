@@ -127,6 +127,45 @@ public:
 //
 //    Accessors.
 //
+public:
+
+    const   unsigned  long
+    getOffset(
+            const  int  x,
+            const  int  y)  const
+    {
+        return ( (this->m_iHeight - y - 1) * (this->m_lStride)
+                 + ((this->m_cbPixel) * x)
+        );
+    }
+
+    const   unsigned char  *
+    getImage()  const
+    {
+        return ( this->m_lpBits );
+    }
+
+    unsigned char *
+    getImage()
+    {
+        return ( this->m_lpBits );
+    }
+
+    const   unsigned char *
+    getPixel(
+            const  int  x,
+            const  int  y)  const
+    {
+        return ( this->m_lpBits + getOffset(x, y) );
+    }
+
+    unsigned char *
+    getPixel(
+            const  int  x,
+            const  int  y)
+    {
+        return ( this->m_lpBits + getOffset(x, y) );
+    }
 
 //========================================================================
 //
