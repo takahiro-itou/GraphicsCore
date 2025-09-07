@@ -79,11 +79,42 @@ public:
 //
 //    Public Member Functions (Virtual Functions).
 //
+public:
+
+    //----------------------------------------------------------------
+    /**   イメージを作成する。
+    **
+    **/
+    virtual  void
+    createImage(
+            const  int  nWidth,
+            const  int  nHeight,
+            void  *     lpBits);
+
+    //----------------------------------------------------------------
+    /**   サンプル画像を描画する。
+    **
+    **/
+    virtual  void
+    drawSample();
 
 //========================================================================
 //
 //    Public Member Functions.
 //
+public:
+
+    //----------------------------------------------------------------
+    /**   矩形を描画する。
+    **
+    **/
+    void
+    fillRectangle(
+            const  int  x1,
+            const  int  y1,
+            const  int  x2,
+            const  int  y2,
+            const  int  color);
 
 //========================================================================
 //

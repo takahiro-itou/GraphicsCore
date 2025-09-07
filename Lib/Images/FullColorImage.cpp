@@ -76,10 +76,45 @@ FullColorImage::~FullColorImage()
 //    Public Member Functions (Virtual Functions).
 //
 
+//----------------------------------------------------------------
+//    イメージを作成する。
+//
+
+void
+FullColorImage::createImage(
+        const  int  nWidth,
+        const  int  nHeight,
+        void  *     lpBits)
+{
+}
+
+//----------------------------------------------------------------
+//    サンプル画像を描画する。
+//
+
+void
+FullColorImage::drawSample()
+{
+}
+
 //========================================================================
 //
 //    Public Member Functions.
 //
+
+//----------------------------------------------------------------
+//    矩形を描画する。
+//
+
+void
+FullColorImage::fillRectangle(
+        const  int  x1,
+        const  int  y1,
+        const  int  x2,
+        const  int  y2,
+        const  int  color)
+{
+}
 
 //========================================================================
 //
