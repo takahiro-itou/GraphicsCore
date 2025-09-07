@@ -161,6 +161,7 @@ AC_CONFIG_FILES([
     Lib/Bar/Makefile
     Lib/Common/Makefile
     Lib/Foo/Makefile
+    Lib/Images/Makefile
 ])
 
 AC_CONFIG_FILES([
@@ -175,6 +176,7 @@ AC_CONFIG_FILES([
     Lib/Bar/Tests/Makefile
     Lib/Common/Tests/Makefile
     Lib/Foo/Tests/Makefile
+    Lib/Images/Tests/Makefile
 ])
 
 dnl
@@ -182,3 +184,4 @@ dnl   指定したファイルを生成する。
 dnl
 
 AC_OUTPUT
+
