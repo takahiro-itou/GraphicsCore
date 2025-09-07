@@ -13,52 +13,48 @@
 *************************************************************************/
 
 /**
-**      An Interface of FullColorImage class.
+**      An Implementation of FullColorImage class.
 **
-**      @file       Images/FullColorImage.h
+**      @file       Images/FullColorImage.cpp
 **/
 
-#if !defined( SAMPLE_IMAGES_INCLUDED_FULL_COLOR_IMAGE_H )
-#    define   SAMPLE_IMAGES_INCLUDED_FULL_COLOR_IMAGE_H
-
-#include    "Sample/Images/SampleSettings.h"
+#include    "Sample/Images/FullColorImage.h"
 
 
 SAMPLE_NAMESPACE_BEGIN
 namespace  Images  {
+
+namespace  {
+
+}   //  End of (Unnamed) namespace.
+
 
 //========================================================================
 //
 //    FullColorImage  class.
 //
 
-class  FullColorImage
-{
-
-//========================================================================
-//
-//    Internal Type Definitions.
-//
-
 //========================================================================
 //
 //    Constructor(s) and Destructor.
 //
-public:
 
-    //----------------------------------------------------------------
-    /**   インスタンスを初期化する
-    **  （デフォルトコンストラクタ）。
-    **
-    **/
-    FullColorImage();
+//----------------------------------------------------------------
+//    インスタンスを初期化する
+//  （デフォルトコンストラクタ）。
 
-    //----------------------------------------------------------------
-    /**   インスタンスを破棄する
-    **  （デストラクタ）。
-    **
-    **/
-    virtual  ~FullColorImage();
+FullColorImage::FullColorImage()
+{
+}
+
+//----------------------------------------------------------------
+//    インスタンスを破棄する
+//  （デストラクタ）。
+//
+
+FullColorImage::~FullColorImage()
+{
+}
 
 //========================================================================
 //
@@ -100,21 +96,5 @@ public:
 //    For Internal Use Only.
 //
 
-//========================================================================
-//
-//    Member Variables.
-//
-
-//========================================================================
-//
-//    Other Features.
-//
-public:
-    //  テストクラス。  //
-    friend  class   FullColorImageTest;
-};
-
 }   //  End of namespace  Images
 SAMPLE_NAMESPACE_END
-
-#endif
