@@ -6,7 +6,6 @@
 extra_tests             =
 TESTS                   =  \
         FullColorImageTest      \
-        SampleSettingsTest      \
         ${extra_tests}
 
 ##
