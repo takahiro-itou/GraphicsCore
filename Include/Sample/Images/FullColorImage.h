@@ -21,7 +21,7 @@
 #if !defined( SAMPLE_IMAGES_INCLUDED_FULL_COLOR_IMAGE_H )
 #    define   SAMPLE_IMAGES_INCLUDED_FULL_COLOR_IMAGE_H
 
-#include    "Sample/Images/SampleSettings.h"
+#include    "Sample/Common/SampleSettings.h"
 
 
 SAMPLE_NAMESPACE_BEGIN
