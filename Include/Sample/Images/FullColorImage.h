@@ -84,11 +84,18 @@ public:
     //----------------------------------------------------------------
     /**   イメージを作成する。
     **
+    **  @param [in] nWidth    イメージの幅
+    **  @param [in] nHeight   イメージの高さ
+    **  @param [in] cbPixel   ピクセル当たりのバイト数。
+    **  @param [in] lStride   行当たりのバイト数。
+    **  @param [in] lpBits    イメージデータ。
     **/
     virtual  void
     createImage(
             const  int  nWidth,
             const  int  nHeight,
+            const  int  cbPixel,
+            const  int  nStride,
             void  *     lpBits);
 
     //----------------------------------------------------------------

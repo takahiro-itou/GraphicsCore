@@ -84,6 +84,8 @@ void
 FullColorImage::createImage(
         const  int  nWidth,
         const  int  nHeight,
+        const  int  cbPixel,
+        const  int  nStride,
         void  *     lpBits)
 {
 }
