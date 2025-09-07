@@ -95,7 +95,7 @@ public:
             const  int  nWidth,
             const  int  nHeight,
             const  int  cbPixel,
-            const  int  nStride,
+            const  int  lStride,
             void  *     lpBits);
 
     //----------------------------------------------------------------
@@ -142,11 +142,23 @@ public:
 //
 //    Member Variables.
 //
+private:
+
+    int     m_iWidth;
+    int     m_iHeight;
+    int     m_cbPixel;
+    int     m_lStride;
+
+    unsigned char *     m_lpBits;
 
 //========================================================================
 //
 //    Other Features.
 //
+private:
+    typedef     FullColorImage      This;
+    FullColorImage      (const  This  &);
+    This &  operator =  (const  This  &);
 public:
     //  テストクラス。  //
     friend  class   FullColorImageTest;

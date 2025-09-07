@@ -44,6 +44,11 @@ namespace  {
 //  （デフォルトコンストラクタ）。
 
 FullColorImage::FullColorImage()
+    : m_iWidth (0),
+      m_iHeight(0),
+      m_cbPixel(3),
+      m_lStride(0),
+      m_lpBits(nullptr)
 {
 }
 
@@ -85,9 +90,14 @@ FullColorImage::createImage(
         const  int  nWidth,
         const  int  nHeight,
         const  int  cbPixel,
-        const  int  nStride,
+        const  int  lStride,
         void  *     lpBits)
 {
+    this->m_iWidth  = nWidth;
+    this->m_iHeight = nHeight;
+    this->m_cbPixel = cbPixel;
+    this->m_lStride = lStride;
+    this->m_lpBits  = static_cast<unsigned char *>(lpBits);
 }
 
 //----------------------------------------------------------------
