@@ -107,10 +107,13 @@ FullColorImage::createImage(
 void
 FullColorImage::drawSample()
 {
-    fillRectangle( 0,  0, this->m_iWidth, this->m_iHeight, 0x00FFFFFF);
+    const  int  iW  = this->m_iWidth;
+    const  int  iH  = this->m_iHeight;
 
-    const  int  rW  = 32;
-    const  int  rH  = 32;
+    fillRectangle(0, 0, iW, iH, 0x00FFFFFF);
+
+    const  int  rW  = iW / 4;
+    const  int  rH  = iH / 4;
 
     fillRectangle(rW * 1, rH * 1, rW * 1 + rW, rH * 1 + rH, 0x000000FF);
     fillRectangle(rW * 2, rH * 1, rW * 2 + rW, rH * 1 + rH, 0x0000FF00);
