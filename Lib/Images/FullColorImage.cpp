@@ -108,6 +108,11 @@ void
 FullColorImage::drawSample()
 {
     fillRectangle( 0,  0, this->m_iWidth, this->m_iHeight, 0x00FFFFFF);
+
+    fillRectangle(32, 32, 64, 64, 0x000000FF);
+    fillRectangle(64, 32, 96, 64, 0x0000FF00);
+    fillRectangle(32, 64, 64, 96, 0x00FF0000);
+    fillRectangle(64, 64, 96, 96, 0x0000FFFF);
 }
 
 //========================================================================
