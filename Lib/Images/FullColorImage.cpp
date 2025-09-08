@@ -109,10 +109,13 @@ FullColorImage::drawSample()
 {
     fillRectangle( 0,  0, this->m_iWidth, this->m_iHeight, 0x00FFFFFF);
 
-    fillRectangle(32, 32, 64, 64, 0x000000FF);
-    fillRectangle(64, 32, 96, 64, 0x0000FF00);
-    fillRectangle(32, 64, 64, 96, 0x00FF0000);
-    fillRectangle(64, 64, 96, 96, 0x0000FFFF);
+    const  int  rW  = 32;
+    const  int  rH  = 32;
+
+    fillRectangle(rW * 1, rH * 1, rW * 1 + rW, rH * 1 + rH, 0x000000FF);
+    fillRectangle(rW * 2, rH * 1, rW * 2 + rW, rH * 1 + rH, 0x0000FF00);
+    fillRectangle(rW * 1, rH * 2, rW * 1 + rW, rH * 2 + rH, 0x00FF0000);
+    fillRectangle(rW * 2, rH * 2, rW * 2 + rW, rH * 2 + rH, 0x0000FFFF);
 }
 
 //========================================================================
