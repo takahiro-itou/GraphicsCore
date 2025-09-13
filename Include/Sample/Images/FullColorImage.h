@@ -129,7 +129,7 @@ public:
 //
 public:
 
-    const   unsigned  long
+    inline  const   unsigned  long
     getOffset(
             const  int  x,
             const  int  y)  const
@@ -139,19 +139,19 @@ public:
         );
     }
 
-    const   unsigned char  *
+    inline  const   unsigned char  *
     getImage()  const
     {
         return ( this->m_lpBits );
     }
 
-    unsigned char *
+    inline  unsigned char *
     getImage()
     {
         return ( this->m_lpBits );
     }
 
-    const   unsigned char *
+    inline  const   unsigned char *
     getPixel(
             const  int  x,
             const  int  y)  const
@@ -159,7 +159,7 @@ public:
         return ( this->m_lpBits + getOffset(x, y) );
     }
 
-    unsigned char *
+    inline  unsigned char *
     getPixel(
             const  int  x,
             const  int  y)
