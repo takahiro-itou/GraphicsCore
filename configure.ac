@@ -162,6 +162,7 @@ AC_CONFIG_FILES([
     Lib/Common/Makefile
     Lib/Foo/Makefile
     Lib/Images/Makefile
+    Lib/pch/Makefile
 ])
 
 AC_CONFIG_FILES([
