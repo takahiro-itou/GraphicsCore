@@ -21,9 +21,9 @@
 #if !defined( SAMPLE_COMMON_INCLUDED_SAMPLE_DOCUMENT_H )
 #    define   SAMPLE_COMMON_INCLUDED_SAMPLE_DOCUMENT_H
 
-#include    "SampleSettings.h"
-
-#include    <string>
+#if !defined( SAMPLE_PCH_INCLUDED_PRE_COMPILE_H )
+#    include    "Sample/pch/PreCompile.h"
+#endif
 
 
 SAMPLE_NAMESPACE_BEGIN
