@@ -21,15 +21,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Core\Lib\Common\SampleDocument.cpp">
+    <ClCompile Include="..\Core\Lib\Common\SampleDocument.cpp">
       <Filter>Source Files\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Core\Include\Sample\Common\SampleDocument.h">
+    <ClInclude Include="..\Core\Include\Sample\Common\SampleDocument.h">
       <Filter>Header Files\Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Core\Include\Sample\Common\SampleSettings.h">
+    <ClInclude Include="..\Core\Include\Sample\Common\SampleSettings.h">
       <Filter>Header Files\Common</Filter>
     </ClInclude>
   </ItemGroup>
