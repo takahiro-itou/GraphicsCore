@@ -3,7 +3,7 @@
 **                                                                      **
 **                  ---   Graphics Test Project.   ---                  **
 **                                                                      **
-**          Copyright (C), 2025-2025, Takahiro Itou                     **
+**          Copyright (C), 2025-2026, Takahiro Itou                     **
 **          All Rights Reserved.                                        **
 **                                                                      **
 **          License: (See COPYING or LICENSE files)                     **
@@ -134,9 +134,10 @@ public:
             const  int  x,
             const  int  y)  const
     {
-        return ( (this->m_iHeight - y - 1) * (this->m_lStride)
-                 + ((this->m_cbPixel) * x)
-        );
+        // return ( (this->m_iHeight - y - 1) * (this->m_lStride)
+        //          + ((this->m_cbPixel) * x)
+        // );
+        return ( (y) * (this->m_lStride) + ((this->m_cbPixel) * x) );
     }
 
     inline  const   unsigned char  *
