@@ -115,10 +115,10 @@ FullColorImage::drawSample()
     const  int  rW  = iW / 4;
     const  int  rH  = iH / 4;
 
-    fillRectangle(rW * 1, rH * 1, rW * 1 + rW, rH * 1 + rH, 0x000000FF);
-    fillRectangle(rW * 2, rH * 1, rW * 2 + rW, rH * 1 + rH, 0x0000FF00);
-    fillRectangle(rW * 1, rH * 2, rW * 1 + rW, rH * 2 + rH, 0x00FF0000);
-    fillRectangle(rW * 2, rH * 2, rW * 2 + rW, rH * 2 + rH, 0x0000FFFF);
+    fillRectangle(rW * 1, rH * 1, rW * 1 + rW, rH * 1 + rH, 0xFF0000FF);
+    fillRectangle(rW * 2, rH * 1, rW * 2 + rW, rH * 1 + rH, 0xFF00FF00);
+    fillRectangle(rW * 1, rH * 2, rW * 1 + rW, rH * 2 + rH, 0xFF00FFFF);
+    fillRectangle(rW * 2, rH * 2, rW * 2 + rW, rH * 2 + rH, 0xFFFF0000);
 }
 
 //========================================================================
@@ -141,6 +141,8 @@ FullColorImage::fillRectangle(
     const   unsigned  char  cB  = ( color        & 0xFF);
     const   unsigned  char  cG  = ((color >>  8) & 0xFF);
     const   unsigned  char  cR  = ((color >> 16) & 0xFF);
+    const   unsigned  char  cA  = ((color >> 24) & 0xFF);
+    const   int     cbRems  = this->m_cbPixel - 3;
 
     for ( int y = y1; y < y2; ++ y ) {
         unsigned char * ptr = getPixel(x1, y);
@@ -148,6 +150,11 @@ FullColorImage::fillRectangle(
             *(ptr ++) = cB;
             *(ptr ++) = cG;
             *(ptr ++) = cR;
+            if ( cbRems == 1 ) {
+                *(ptr ++) = cA;
+            } else {
+                ptr += cbRems;
+            }
         }
     }
 
