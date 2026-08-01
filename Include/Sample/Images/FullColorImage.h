@@ -51,6 +51,12 @@ public:
 
     typedef     void  *         LpWriteBuf;
 
+    typedef     unsigned char   BtByte;
+
+    typedef     BtByte *        LpWritePixelBuf;
+
+    typedef     const BtByte *  LpcReadPixelBuf;
+
 
 //========================================================================
 //
@@ -152,31 +158,31 @@ public:
         return ( (y) * (this->m_lStride) + ((this->m_cbPixel) * x) );
     }
 
-    inline  const   unsigned char  *
+    inline  LpcReadPixelBuf
     getImage()  const
     {
         return ( this->m_lpBits );
     }
 
-    inline  unsigned char *
+    inline  LpWritePixelBuf
     getImage()
     {
         return ( this->m_lpBits );
     }
 
-    inline  const   unsigned char  *
+    inline  LpcReadPixelBuf
     getOrigin()  const
     {
         return ( this->m_lpOrig );
     }
 
-    inline  unsigned char  *
+    inline  LpWritePixelBuf
     getOrigin()
     {
         return ( this->m_lpOrig );
     }
 
-    inline  const   unsigned char *
+    inline  LpcReadPixelBuf
     getPixel(
             const  PosUnitType  x,
             const  PosUnitType  y)  const
@@ -184,7 +190,7 @@ public:
         return ( this->m_lpOrig + getOffset(x, y) );
     }
 
-    inline  unsigned char *
+    inline  LpWritePixelBuf
     getPixel(
             const  PosUnitType  x,
             const  PosUnitType  y)
@@ -208,15 +214,15 @@ public:
 //
 private:
 
-    PosUnitType     m_iWidth;
-    PosUnitType     m_iHeight;
-    LenUnitType     m_cbPixel;
-    LenUnitType     m_lStride;
+    PosUnitType         m_iWidth;
+    PosUnitType         m_iHeight;
+    LenUnitType         m_cbPixel;
+    LenUnitType         m_lStride;
 
-    unsigned char *     m_lpBits;
+    LpWritePixelBuf     m_lpBits;
 
     /**   原点に対応するアドレス。  **/
-    unsigned char *     m_lpOrig;
+    LpWritePixelBuf     m_lpOrig;
 
 //========================================================================
 //

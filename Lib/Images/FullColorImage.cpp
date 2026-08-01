@@ -95,7 +95,7 @@ FullColorImage::createImage(
         LpWriteBuf   const  lpBits)
 {
     //  バッファのアドレスと原点に対応するアドレスを保存。  //
-    this->m_lpBits  = static_cast<unsigned char *>(lpBits);
+    this->m_lpBits  = static_cast<BtByte *>(lpBits);
     if ( lStride < 0 ) {
         //  ボトムアップ形式
         this->m_lpOrig  = this->m_lpBits + ((nHeight - 1) * lStride);
@@ -148,14 +148,14 @@ FullColorImage::fillRectangle(
         const  PosUnitType  y2,
         const  ColorArgb32  color)
 {
-    const   unsigned  char  cB  = ( color        & 0xFF);
-    const   unsigned  char  cG  = ((color >>  8) & 0xFF);
-    const   unsigned  char  cR  = ((color >> 16) & 0xFF);
-    const   unsigned  char  cA  = ((color >> 24) & 0xFF);
+    const   BtByte  cB  = ( color        & 0xFF);
+    const   BtByte  cG  = ((color >>  8) & 0xFF);
+    const   BtByte  cR  = ((color >> 16) & 0xFF);
+    const   BtByte  cA  = ((color >> 24) & 0xFF);
     const   LenUnitType     cbRems  = this->m_cbPixel - 3;
 
     for ( PosUnitType y = y1; y < y2; ++ y ) {
-        unsigned char * ptr = getPixel(x1, y);
+        LpWritePixelBuf ptr = getPixel(x1, y);
         for ( PosUnitType x = x1; x < x2; ++ x ) {
             *(ptr ++) = cB;
             *(ptr ++) = cG;
