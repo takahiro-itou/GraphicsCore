@@ -45,6 +45,8 @@ public:
 
     typedef     int     LenUnitType;
 
+    typedef     unsigned long   OffsetType;
+
     typedef     int     ColorArgb32;
 
 //========================================================================
@@ -136,7 +138,7 @@ public:
 //
 public:
 
-    inline  const   unsigned  long
+    inline  const   OffsetType
     getOffset(
             const  PosUnitType  x,
             const  PosUnitType  y)  const
