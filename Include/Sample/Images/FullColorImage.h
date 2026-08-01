@@ -45,7 +45,7 @@ public:
 
     typedef     int             LenUnitType;
 
-    typedef     unsigned long   OffsetType;
+    typedef     long            OffsetType;
 
     typedef     int             ColorArgb32;
 

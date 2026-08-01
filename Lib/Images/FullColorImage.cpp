@@ -98,7 +98,7 @@ FullColorImage::createImage(
     this->m_lpBits  = static_cast<BtByte *>(lpBits);
     if ( lStride < 0 ) {
         //  ボトムアップ形式
-        this->m_lpOrig  = this->m_lpBits + ((nHeight - 1) * lStride);
+        this->m_lpOrig  = this->m_lpBits - ((nHeight - 1) * lStride);
     } else {
         //  トップダウン形式
         this->m_lpOrig  = this->m_lpBits;
