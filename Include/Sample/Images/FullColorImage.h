@@ -39,6 +39,9 @@ class  FullColorImage
 //
 //    Internal Type Definitions.
 //
+public:
+
+    typedef     int     PosUnitType;
 
 //========================================================================
 //
@@ -92,8 +95,8 @@ public:
     **/
     virtual  void
     createImage(
-            const  int  nWidth,
-            const  int  nHeight,
+            const  PosUnitType  nWidth,
+            const  PosUnitType  nHeight,
             const  int  cbPixel,
             const  int  lStride,
             void  *     lpBits);
@@ -117,10 +120,10 @@ public:
     **/
     void
     fillRectangle(
-            const  int  x1,
-            const  int  y1,
-            const  int  x2,
-            const  int  y2,
+            const  PosUnitType  x1,
+            const  PosUnitType  y1,
+            const  PosUnitType  x2,
+            const  PosUnitType  y2,
             const  int  color);
 
 //========================================================================
@@ -131,8 +134,8 @@ public:
 
     inline  const   unsigned  long
     getOffset(
-            const  int  x,
-            const  int  y)  const
+            const  PosUnitType  x,
+            const  PosUnitType  y)  const
     {
         // return ( (this->m_iHeight - y - 1) * (this->m_lStride)
         //          + ((this->m_cbPixel) * x)
@@ -166,16 +169,16 @@ public:
 
     inline  const   unsigned char *
     getPixel(
-            const  int  x,
-            const  int  y)  const
+            const  PosUnitType  x,
+            const  PosUnitType  y)  const
     {
         return ( this->m_lpOrig + getOffset(x, y) );
     }
 
     inline  unsigned char *
     getPixel(
-            const  int  x,
-            const  int  y)
+            const  PosUnitType  x,
+            const  PosUnitType  y)
     {
         return ( this->m_lpOrig + getOffset(x, y) );
     }
@@ -196,10 +199,10 @@ public:
 //
 private:
 
-    int     m_iWidth;
-    int     m_iHeight;
-    int     m_cbPixel;
-    int     m_lStride;
+    PosUnitType     m_iWidth;
+    PosUnitType     m_iHeight;
+    PosUnitType     m_cbPixel;
+    PosUnitType     m_lStride;
 
     unsigned char *     m_lpBits;
 
