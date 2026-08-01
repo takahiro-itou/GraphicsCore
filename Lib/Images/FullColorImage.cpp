@@ -3,7 +3,7 @@
 **                                                                      **
 **                  ---   Graphics Test Project.   ---                  **
 **                                                                      **
-**          Copyright (C), 2025-2025, Takahiro Itou                     **
+**          Copyright (C), 2025-2026, Takahiro Itou                     **
 **          All Rights Reserved.                                        **
 **                                                                      **
 **          License: (See COPYING or LICENSE files)                     **
@@ -48,7 +48,8 @@ FullColorImage::FullColorImage()
       m_iHeight(0),
       m_cbPixel(3),
       m_lStride(0),
-      m_lpBits(nullptr)
+      m_lpBits(nullptr),
+      m_lpOrig(nullptr)
 {
 }
 
@@ -87,17 +88,26 @@ FullColorImage::~FullColorImage()
 
 void
 FullColorImage::createImage(
-        const  int  nWidth,
-        const  int  nHeight,
-        const  int  cbPixel,
-        const  int  lStride,
-        void  *     lpBits)
+        const  PosUnitType  nWidth,
+        const  PosUnitType  nHeight,
+        const  LenUnitType  cbPixel,
+        const  LenUnitType  lStride,
+        LpWriteBuf   const  lpBits)
 {
+    //  バッファのアドレスと原点に対応するアドレスを保存。  //
+    this->m_lpBits  = static_cast<BtByte *>(lpBits);
+    if ( lStride < 0 ) {
+        //  ボトムアップ形式
+        this->m_lpOrig  = this->m_lpBits - ((nHeight - 1) * lStride);
+    } else {
+        //  トップダウン形式
+        this->m_lpOrig  = this->m_lpBits;
+    }
+
     this->m_iWidth  = nWidth;
     this->m_iHeight = nHeight;
     this->m_cbPixel = cbPixel;
     this->m_lStride = lStride;
-    this->m_lpBits  = static_cast<unsigned char *>(lpBits);
 }
 
 //----------------------------------------------------------------
@@ -107,18 +117,18 @@ FullColorImage::createImage(
 void
 FullColorImage::drawSample()
 {
-    const  int  iW  = this->m_iWidth;
-    const  int  iH  = this->m_iHeight;
+    const  PosUnitType  iW  = this->m_iWidth;
+    const  PosUnitType  iH  = this->m_iHeight;
 
     fillRectangle(0, 0, iW, iH, 0x00FFFFFF);
 
-    const  int  rW  = iW / 4;
-    const  int  rH  = iH / 4;
+    const  PosUnitType  rW  = iW / 4;
+    const  PosUnitType  rH  = iH / 4;
 
-    fillRectangle(rW * 1, rH * 1, rW * 1 + rW, rH * 1 + rH, 0x000000FF);
-    fillRectangle(rW * 2, rH * 1, rW * 2 + rW, rH * 1 + rH, 0x0000FF00);
-    fillRectangle(rW * 1, rH * 2, rW * 1 + rW, rH * 2 + rH, 0x00FF0000);
-    fillRectangle(rW * 2, rH * 2, rW * 2 + rW, rH * 2 + rH, 0x0000FFFF);
+    fillRectangle(rW * 1, rH * 1, rW * 1 + rW, rH * 1 + rH, 0xFF0000FF);
+    fillRectangle(rW * 2, rH * 1, rW * 2 + rW, rH * 1 + rH, 0xFF00FF00);
+    fillRectangle(rW * 1, rH * 2, rW * 1 + rW, rH * 2 + rH, 0xFF00FFFF);
+    fillRectangle(rW * 2, rH * 2, rW * 2 + rW, rH * 2 + rH, 0xFFFF0000);
 }
 
 //========================================================================
@@ -132,22 +142,29 @@ FullColorImage::drawSample()
 
 void
 FullColorImage::fillRectangle(
-        const  int  x1,
-        const  int  y1,
-        const  int  x2,
-        const  int  y2,
-        const  int  color)
+        const  PosUnitType  x1,
+        const  PosUnitType  y1,
+        const  PosUnitType  x2,
+        const  PosUnitType  y2,
+        const  ColorArgb32  color)
 {
-    const   unsigned  char  cB  = ( color        & 0xFF);
-    const   unsigned  char  cG  = ((color >>  8) & 0xFF);
-    const   unsigned  char  cR  = ((color >> 16) & 0xFF);
+    const   BtByte  cB  = ( color        & 0xFF);
+    const   BtByte  cG  = ((color >>  8) & 0xFF);
+    const   BtByte  cR  = ((color >> 16) & 0xFF);
+    const   BtByte  cA  = ((color >> 24) & 0xFF);
+    const   LenUnitType     cbRems  = this->m_cbPixel - 3;
 
-    for ( int y = y1; y < y2; ++ y ) {
-        unsigned char * ptr = getPixel(x1, y);
-        for ( int x = x1; x < x2; ++ x ) {
+    for ( PosUnitType y = y1; y < y2; ++ y ) {
+        LpWritePixelBuf ptr = getPixel(x1, y);
+        for ( PosUnitType x = x1; x < x2; ++ x ) {
             *(ptr ++) = cB;
             *(ptr ++) = cG;
             *(ptr ++) = cR;
+            if ( cbRems == 1 ) {
+                *(ptr ++) = cA;
+            } else {
+                ptr += cbRems;
+            }
         }
     }
 
