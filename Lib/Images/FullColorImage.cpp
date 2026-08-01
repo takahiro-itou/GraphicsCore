@@ -146,7 +146,7 @@ FullColorImage::fillRectangle(
         const  PosUnitType  y1,
         const  PosUnitType  x2,
         const  PosUnitType  y2,
-        const  int  color)
+        const  ColorArgb32  color)
 {
     const   unsigned  char  cB  = ( color        & 0xFF);
     const   unsigned  char  cG  = ((color >>  8) & 0xFF);

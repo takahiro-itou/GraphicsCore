@@ -45,6 +45,8 @@ public:
 
     typedef     int     LenUnitType;
 
+    typedef     int     ColorArgb32;
+
 //========================================================================
 //
 //    Constructor(s) and Destructor.
@@ -126,7 +128,7 @@ public:
             const  PosUnitType  y1,
             const  PosUnitType  x2,
             const  PosUnitType  y2,
-            const  int  color);
+            const  ColorArgb32  color);
 
 //========================================================================
 //
