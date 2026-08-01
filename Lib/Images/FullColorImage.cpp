@@ -115,20 +115,25 @@ FullColorImage::createImage(
 //
 
 void
-FullColorImage::drawSample()
+FullColorImage::drawSample(
+        const  ColorArgb32  colBG,
+        const  ColorArgb32  colTL,
+        const  ColorArgb32  colTR,
+        const  ColorArgb32  colBL,
+        const  ColorArgb32  colBR)
 {
     const  PosUnitType  iW  = this->m_iWidth;
     const  PosUnitType  iH  = this->m_iHeight;
 
-    fillRectangle(0, 0, iW, iH, 0x00FFFFFF);
+    fillRectangle(0, 0, iW, iH, colBG);
 
     const  PosUnitType  rW  = iW / 4;
     const  PosUnitType  rH  = iH / 4;
 
-    fillTriangle(rW * 1, rH * 1, rW * 1 + rW, rH * 1 + rH, 0xFF0000FF);
-    fillTriangle(rW * 2, rH * 1, rW * 2 + rW, rH * 1 + rH, 0xFF00FF00);
-    fillTriangle(rW * 1, rH * 2, rW * 1 + rW, rH * 2 + rH, 0xFF00FFFF);
-    fillTriangle(rW * 2, rH * 2, rW * 2 + rW, rH * 2 + rH, 0xFFFF0000);
+    fillTriangle(rW * 1, rH * 1, rW * 1 + rW, rH * 1 + rH, colTL);
+    fillTriangle(rW * 2, rH * 1, rW * 2 + rW, rH * 1 + rH, colTR);
+    fillTriangle(rW * 1, rH * 2, rW * 1 + rW, rH * 2 + rH, colBL);
+    fillTriangle(rW * 2, rH * 2, rW * 2 + rW, rH * 2 + rH, colBR);
 }
 
 //========================================================================

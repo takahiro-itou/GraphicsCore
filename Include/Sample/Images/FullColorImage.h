@@ -121,7 +121,13 @@ public:
     **
     **/
     virtual  void
-    drawSample();
+    drawSample(
+            const  ColorArgb32  colBG   = 0xFFFFFFFF,
+            const  ColorArgb32  colTL   = 0xFF0000FF,
+            const  ColorArgb32  colTR   = 0xFF00FF00,
+            const  ColorArgb32  colBL   = 0xFF00FFFF,
+            const  ColorArgb32  colBR   = 0xFFFF0000);
+
 
 //========================================================================
 //
