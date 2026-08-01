@@ -125,10 +125,10 @@ FullColorImage::drawSample()
     const  PosUnitType  rW  = iW / 4;
     const  PosUnitType  rH  = iH / 4;
 
-    fillRectangle(rW * 1, rH * 1, rW * 1 + rW, rH * 1 + rH, 0xFF0000FF);
-    fillRectangle(rW * 2, rH * 1, rW * 2 + rW, rH * 1 + rH, 0xFF00FF00);
-    fillRectangle(rW * 1, rH * 2, rW * 1 + rW, rH * 2 + rH, 0xFF00FFFF);
-    fillRectangle(rW * 2, rH * 2, rW * 2 + rW, rH * 2 + rH, 0xFFFF0000);
+    fillTriangle(rW * 1, rH * 1, rW * 1 + rW, rH * 1 + rH, 0xFF0000FF);
+    fillTriangle(rW * 2, rH * 1, rW * 2 + rW, rH * 1 + rH, 0xFF00FF00);
+    fillTriangle(rW * 1, rH * 2, rW * 1 + rW, rH * 2 + rH, 0xFF00FFFF);
+    fillTriangle(rW * 2, rH * 2, rW * 2 + rW, rH * 2 + rH, 0xFFFF0000);
 }
 
 //========================================================================
@@ -166,6 +166,45 @@ FullColorImage::fillRectangle(
                 ptr += cbRems;
             }
         }
+    }
+
+    return;
+}
+
+//----------------------------------------------------------------
+//    三角形を描画する。
+//
+
+void
+FullColorImage::fillTriangle(
+        const  PosUnitType  x1,
+        const  PosUnitType  y1,
+        const  PosUnitType  x2,
+        const  PosUnitType  y2,
+        const  ColorArgb32  color)
+{
+    const   BtByte  cB  = ( color        & 0xFF);
+    const   BtByte  cG  = ((color >>  8) & 0xFF);
+    const   BtByte  cR  = ((color >> 16) & 0xFF);
+    const   BtByte  cA  = ((color >> 24) & 0xFF);
+    const   LenUnitType     cbRems  = this->m_cbPixel - 3;
+
+    PosUnitType tmp = 1;
+    for ( PosUnitType y = y1; y < y2; ++ y ) {
+        LpWritePixelBuf ptr = getPixel(x1, y);
+        PosUnitType  lastX  = (x1 + tmp);
+        if ( x2 < lastX ) { lastX = x2; }
+        for ( PosUnitType x = x1; x < lastX; ++ x ) {
+            *(ptr ++) = cB;
+            *(ptr ++) = cG;
+            *(ptr ++) = cR;
+            if ( cbRems == 1 ) {
+                *(ptr ++) = cA;
+            } else {
+                ptr += cbRems;
+            }
+        }
+        ++ tmp;
     }
 
     return;

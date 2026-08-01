@@ -141,6 +141,18 @@ public:
             const  PosUnitType  y2,
             const  ColorArgb32  color);
 
+    //----------------------------------------------------------------
+    /**   三角形を描画する。
+    **
+    **/
+    void
+    fillTriangle(
+            const  PosUnitType  x1,
+            const  PosUnitType  y1,
+            const  PosUnitType  x2,
+            const  PosUnitType  y2,
+            const  ColorArgb32  color);
+
 //========================================================================
 //
 //    Accessors.
