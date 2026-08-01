@@ -90,8 +90,8 @@ void
 FullColorImage::createImage(
         const  PosUnitType  nWidth,
         const  PosUnitType  nHeight,
-        const  int  cbPixel,
-        const  int  lStride,
+        const  LenUnitType  cbPixel,
+        const  LenUnitType  lStride,
         void  *     lpBits)
 {
     //  バッファのアドレスと原点に対応するアドレスを保存。  //
@@ -152,7 +152,7 @@ FullColorImage::fillRectangle(
     const   unsigned  char  cG  = ((color >>  8) & 0xFF);
     const   unsigned  char  cR  = ((color >> 16) & 0xFF);
     const   unsigned  char  cA  = ((color >> 24) & 0xFF);
-    const   int     cbRems  = this->m_cbPixel - 3;
+    const   LenUnitType     cbRems  = this->m_cbPixel - 3;
 
     for ( PosUnitType y = y1; y < y2; ++ y ) {
         unsigned char * ptr = getPixel(x1, y);

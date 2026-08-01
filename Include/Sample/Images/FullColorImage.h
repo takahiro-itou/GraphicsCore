@@ -43,6 +43,8 @@ public:
 
     typedef     int     PosUnitType;
 
+    typedef     int     LenUnitType;
+
 //========================================================================
 //
 //    Constructor(s) and Destructor.
@@ -97,8 +99,8 @@ public:
     createImage(
             const  PosUnitType  nWidth,
             const  PosUnitType  nHeight,
-            const  int  cbPixel,
-            const  int  lStride,
+            const  LenUnitType  cbPixel,
+            const  LenUnitType  lStride,
             void  *     lpBits);
 
     //----------------------------------------------------------------
@@ -201,8 +203,8 @@ private:
 
     PosUnitType     m_iWidth;
     PosUnitType     m_iHeight;
-    PosUnitType     m_cbPixel;
-    PosUnitType     m_lStride;
+    LenUnitType     m_cbPixel;
+    LenUnitType     m_lStride;
 
     unsigned char *     m_lpBits;
 
