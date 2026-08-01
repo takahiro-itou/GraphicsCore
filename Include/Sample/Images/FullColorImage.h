@@ -3,7 +3,7 @@
 **                                                                      **
 **                  ---   Graphics Test Project.   ---                  **
 **                                                                      **
-**          Copyright (C), 2025-2025, Takahiro Itou                     **
+**          Copyright (C), 2025-2026, Takahiro Itou                     **
 **          All Rights Reserved.                                        **
 **                                                                      **
 **          License: (See COPYING or LICENSE files)                     **
@@ -39,6 +39,24 @@ class  FullColorImage
 //
 //    Internal Type Definitions.
 //
+public:
+
+    typedef     int             PosUnitType;
+
+    typedef     int             LenUnitType;
+
+    typedef     long            OffsetType;
+
+    typedef     int             ColorArgb32;
+
+    typedef     void  *         LpWriteBuf;
+
+    typedef     unsigned char   BtByte;
+
+    typedef     BtByte *        LpWritePixelBuf;
+
+    typedef     const BtByte *  LpcReadPixelBuf;
+
 
 //========================================================================
 //
@@ -92,18 +110,24 @@ public:
     **/
     virtual  void
     createImage(
-            const  int  nWidth,
-            const  int  nHeight,
-            const  int  cbPixel,
-            const  int  lStride,
-            void  *     lpBits);
+            const  PosUnitType  nWidth,
+            const  PosUnitType  nHeight,
+            const  LenUnitType  cbPixel,
+            const  LenUnitType  lStride,
+            LpWriteBuf   const  lpBits);
 
     //----------------------------------------------------------------
     /**   サンプル画像を描画する。
     **
     **/
     virtual  void
-    drawSample();
+    drawSample(
+            const  ColorArgb32  colBG   = 0xFFFFFFFF,
+            const  ColorArgb32  colTL   = 0xFF0000FF,
+            const  ColorArgb32  colTR   = 0xFF00FF00,
+            const  ColorArgb32  colBL   = 0xFF00FFFF,
+            const  ColorArgb32  colBR   = 0xFFFF0000);
+
 
 //========================================================================
 //
@@ -117,11 +141,23 @@ public:
     **/
     void
     fillRectangle(
-            const  int  x1,
-            const  int  y1,
-            const  int  x2,
-            const  int  y2,
-            const  int  color);
+            const  PosUnitType  x1,
+            const  PosUnitType  y1,
+            const  PosUnitType  x2,
+            const  PosUnitType  y2,
+            const  ColorArgb32  color);
+
+    //----------------------------------------------------------------
+    /**   三角形を描画する。
+    **
+    **/
+    void
+    fillTriangle(
+            const  PosUnitType  x1,
+            const  PosUnitType  y1,
+            const  PosUnitType  x2,
+            const  PosUnitType  y2,
+            const  ColorArgb32  color);
 
 //========================================================================
 //
@@ -129,42 +165,55 @@ public:
 //
 public:
 
-    inline  const   unsigned  long
+    inline  const   OffsetType
     getOffset(
-            const  int  x,
-            const  int  y)  const
+            const  PosUnitType  x,
+            const  PosUnitType  y)  const
     {
-        return ( (this->m_iHeight - y - 1) * (this->m_lStride)
-                 + ((this->m_cbPixel) * x)
-        );
+        // return ( (this->m_iHeight - y - 1) * (this->m_lStride)
+        //          + ((this->m_cbPixel) * x)
+        // );
+        return ( (y) * (this->m_lStride) + ((this->m_cbPixel) * x) );
     }
 
-    inline  const   unsigned char  *
+    inline  LpcReadPixelBuf
     getImage()  const
     {
         return ( this->m_lpBits );
     }
 
-    inline  unsigned char *
+    inline  LpWritePixelBuf
     getImage()
     {
         return ( this->m_lpBits );
     }
 
-    inline  const   unsigned char *
-    getPixel(
-            const  int  x,
-            const  int  y)  const
+    inline  LpcReadPixelBuf
+    getOrigin()  const
     {
-        return ( this->m_lpBits + getOffset(x, y) );
+        return ( this->m_lpOrig );
     }
 
-    inline  unsigned char *
-    getPixel(
-            const  int  x,
-            const  int  y)
+    inline  LpWritePixelBuf
+    getOrigin()
     {
-        return ( this->m_lpBits + getOffset(x, y) );
+        return ( this->m_lpOrig );
+    }
+
+    inline  LpcReadPixelBuf
+    getPixel(
+            const  PosUnitType  x,
+            const  PosUnitType  y)  const
+    {
+        return ( this->m_lpOrig + getOffset(x, y) );
+    }
+
+    inline  LpWritePixelBuf
+    getPixel(
+            const  PosUnitType  x,
+            const  PosUnitType  y)
+    {
+        return ( this->m_lpOrig + getOffset(x, y) );
     }
 
 //========================================================================
@@ -183,12 +232,15 @@ public:
 //
 private:
 
-    int     m_iWidth;
-    int     m_iHeight;
-    int     m_cbPixel;
-    int     m_lStride;
+    PosUnitType         m_iWidth;
+    PosUnitType         m_iHeight;
+    LenUnitType         m_cbPixel;
+    LenUnitType         m_lStride;
 
-    unsigned char *     m_lpBits;
+    LpWritePixelBuf     m_lpBits;
+
+    /**   原点に対応するアドレス。  **/
+    LpWritePixelBuf     m_lpOrig;
 
 //========================================================================
 //
