@@ -48,7 +48,8 @@ FullColorImage::FullColorImage()
       m_iHeight(0),
       m_cbPixel(3),
       m_lStride(0),
-      m_lpBits(nullptr)
+      m_lpBits(nullptr),
+      m_lpOrig(nullptr)
 {
 }
 

@@ -152,6 +152,18 @@ public:
         return ( this->m_lpBits );
     }
 
+    inline  const   unsigned char  *
+    getOrigin()  const
+    {
+        return ( this->m_lpOrig );
+    }
+
+    inline  unsigned char  *
+    getOrigin()
+    {
+        return ( this->m_lpOrig );
+    }
+
     inline  const   unsigned char *
     getPixel(
             const  int  x,
@@ -190,6 +202,9 @@ private:
     int     m_lStride;
 
     unsigned char *     m_lpBits;
+
+    /**   原点に対応するアドレス。  **/
+    unsigned char *     m_lpOrig;
 
 //========================================================================
 //
