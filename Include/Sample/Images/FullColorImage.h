@@ -169,7 +169,7 @@ public:
             const  int  x,
             const  int  y)  const
     {
-        return ( this->m_lpBits + getOffset(x, y) );
+        return ( this->m_lpOrig + getOffset(x, y) );
     }
 
     inline  unsigned char *
@@ -177,7 +177,7 @@ public:
             const  int  x,
             const  int  y)
     {
-        return ( this->m_lpBits + getOffset(x, y) );
+        return ( this->m_lpOrig + getOffset(x, y) );
     }
 
 //========================================================================

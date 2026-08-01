@@ -94,11 +94,20 @@ FullColorImage::createImage(
         const  int  lStride,
         void  *     lpBits)
 {
+    //  バッファのアドレスと原点に対応するアドレスを保存。  //
+    this->m_lpBits  = static_cast<unsigned char *>(lpBits);
+    if ( lStride < 0 ) {
+        //  ボトムアップ形式
+        this->m_lpOrig  = this->m_lpBits + ((nHeight - 1) * lStride);
+    } else {
+        //  トップダウン形式
+        this->m_lpOrig  = this->m_lpBits;
+    }
+
     this->m_iWidth  = nWidth;
     this->m_iHeight = nHeight;
     this->m_cbPixel = cbPixel;
     this->m_lStride = lStride;
-    this->m_lpBits  = static_cast<unsigned char *>(lpBits);
 }
 
 //----------------------------------------------------------------
