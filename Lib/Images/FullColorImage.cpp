@@ -92,7 +92,7 @@ FullColorImage::createImage(
         const  PosUnitType  nHeight,
         const  LenUnitType  cbPixel,
         const  LenUnitType  lStride,
-        void  *     lpBits)
+        LpWriteBuf   const  lpBits)
 {
     //  バッファのアドレスと原点に対応するアドレスを保存。  //
     this->m_lpBits  = static_cast<unsigned char *>(lpBits);

@@ -41,13 +41,16 @@ class  FullColorImage
 //
 public:
 
-    typedef     int     PosUnitType;
+    typedef     int             PosUnitType;
 
-    typedef     int     LenUnitType;
+    typedef     int             LenUnitType;
 
     typedef     unsigned long   OffsetType;
 
-    typedef     int     ColorArgb32;
+    typedef     int             ColorArgb32;
+
+    typedef     void  *         LpWriteBuf;
+
 
 //========================================================================
 //
@@ -105,7 +108,7 @@ public:
             const  PosUnitType  nHeight,
             const  LenUnitType  cbPixel,
             const  LenUnitType  lStride,
-            void  *     lpBits);
+            LpWriteBuf   const  lpBits);
 
     //----------------------------------------------------------------
     /**   サンプル画像を描画する。
