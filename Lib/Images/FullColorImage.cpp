@@ -95,15 +95,20 @@ FullColorImage::allocateImage(
         const  LenUnitType  cbPixel,
         const  LenUnitType  lStride)
 {
+    LpWritePixelBuf ptrBuf  = nullptr;
+    LenUnitType     cbSize  = 0;
+    LenUnitType     wStride = lStride;
+
     freeImageBuffer();
 
-    LpWritePixelBuf ptr = nullptr;
-    LenUnitType cbSize  = 0;
 
-    cbSize  = lStride * nHeight;
-    ptr = new BtByte [cbSize];
+    if ( wStride == 0 ) {
+        wStride = computeBytesPerPixel(nWidth, cbPixel);
+    }
+    cbSize  = (wStride >= 0 ? wStride : -wStride) * nHeight;
+    ptrBuf  = new BtByte [cbSize];
 
-    this->createImage(nWidth, nHeight, cbSize, lStride, ptr);
+    this->createImage(nWidth, nHeight, cbSize, wStride, ptr);
     return ( this->m_lpAlloc = ptr );
 }
 
