@@ -143,6 +143,12 @@ public:
             const  ColorArgb32  colBL   = 0xFF00FFFF,
             const  ColorArgb32  colBR   = 0xFFFF0000);
 
+    //----------------------------------------------------------------
+    /**   確保したバッファを解放する。
+    **
+    **/
+    virtual  void
+    freeImageBuffer();
 
 //========================================================================
 //
@@ -284,7 +290,7 @@ private:
     LpWritePixelBuf     m_lpBits;
 
     /**   確保したメモリバッファ。  **/
-    LpWriteBuf          m_lpAlloc;
+    LpWritePixelBuf     m_lpAlloc;
 
     /**   原点に対応するアドレス。  **/
     LpWritePixelBuf     m_lpOrig;

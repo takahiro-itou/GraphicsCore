@@ -61,6 +61,7 @@ FullColorImage::FullColorImage()
 
 FullColorImage::~FullColorImage()
 {
+    freeImageBuffer();
 }
 
 //========================================================================
@@ -94,7 +95,9 @@ FullColorImage::allocateImage(
         const  LenUnitType  cbPixel,
         const  LenUnitType  lStride)
 {
-    LpWriteBuf  ptr     = nullptr;
+    freeImageBuffer();
+
+    LpWritePixelBuf ptr = nullptr;
     LenUnitType cbSize  = 0;
 
     cbSize  = lStride * nHeight;
@@ -157,6 +160,26 @@ FullColorImage::drawSample(
     fillTriangle(rW * 1, rH * 2, rW * 1 + rW, rH * 2 + rH, colBL);
     fillTriangle(rW * 2, rH * 2, rW * 2 + rW, rH * 2 + rH, colBR);
 }
+
+//----------------------------------------------------------------
+//    確保したバッファを解放する。
+//
+
+void
+FullColorImage::freeImageBuffer()
+{
+    LpWritePixelBuf ptr = this->m_lpAlloc;
+    if ( ptr == nullptr ) {
+        return;
+    }
+
+    delete  [] ptr;
+
+    this->m_lpBits  = nullptr;
+    this->m_lpOrig  = nullptr;
+    this->m_lpAlloc = nullptr;
+}
+
 
 //========================================================================
 //
