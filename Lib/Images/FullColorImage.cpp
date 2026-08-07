@@ -20,6 +20,9 @@
 
 #include    "Sample/Images/FullColorImage.h"
 
+#include    <algorithm>
+#include    <cstring>
+
 
 SAMPLE_NAMESPACE_BEGIN
 namespace  Images  {
@@ -119,13 +122,18 @@ FullColorImage::allocateImage(
 }
 
 //----------------------------------------------------------------
-//    バッファの内容を単純にコピーする。
+//    バッファの単純コピーができるか確認する。
 //
 
-void
-FullColorImage::copyBuffer(
-        LpWriteBuf  ptrDst)
+bool
+FullColorImage::canCopyBuffer(
+        const  FullColorImage  &imgSrc)  const
 {
+    if ( this->m_lStride != imgSrc.m_lStride ) { return  false; }
+    if ( this->m_iWidth  != imgSrc.m_iWidth  ) { return  false; }
+    if ( this->m_iHeight != imgSrc.m_iHeight ) { return  false; }
+
+    return ( true );
 }
 
 //----------------------------------------------------------------
@@ -136,6 +144,20 @@ void
 FullColorImage::copyImage(
         const  FullColorImage  &imgSrc)
 {
+    if ( this->m_lpBits == imgSrc.m_lpBits ) {
+        //  コピー元とコピー先が同じなので何もしない。  //
+        return;
+    }
+
+    if ( canCopyBuffer(imgSrc) ) {
+        //  単純コピーが可能。  //
+        imgSrc.copyToBuffer(this->m_lpBits);
+    }
+
+    //  画像の小さいほうに合わせて、矩形コピーを実行。  //
+    const  PosUnitType  x2  = std::min(this->m_iWidth,  imgSrc.m_iWidth );
+    const  PosUnitType  y2  = std::min(this->m_iHeight, imgSrc.m_iHeight);
+    this->copyRectangle(imgSrc, 0, 0, x2, y2);
 }
 
 //----------------------------------------------------------------
@@ -150,6 +172,18 @@ FullColorImage::copyRectangle(
         const  PosUnitType      x2,
         const  PosUnitType      y2)
 {
+}
+
+//----------------------------------------------------------------
+//    バッファの内容を単純にコピーする。
+//
+
+void
+FullColorImage::copyToBuffer(
+        LpWriteBuf  ptrDst)  const
+{
+    const  LenUnitType  cbCopy  = this->m_lStride * this->m_iHeight;
+    std::memcpy(ptrDst, this->m_lpBits, cbCopy);
 }
 
 //----------------------------------------------------------------

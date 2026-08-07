@@ -115,12 +115,12 @@ public:
             const  LenUnitType  lStride = 0);
 
     //----------------------------------------------------------------
-    /**   バッファの内容を単純にコピーする。
+    /**   バッファの単純コピーができるか確認する。
     **
     **/
-    virtual  void
-    copyBuffer(
-            LpWriteBuf  ptrDst);
+    virtual  bool
+    canCopyBuffer(
+            const  FullColorImage  &imgSrc)  const;
 
     //----------------------------------------------------------------
     /**   イメージをコピーする。
@@ -141,6 +141,14 @@ public:
             const  PosUnitType      y1,
             const  PosUnitType      x2,
             const  PosUnitType      y2);
+
+    //----------------------------------------------------------------
+    /**   バッファの内容を単純にコピーする。
+    **
+    **/
+    virtual  void
+    copyToBuffer(
+            LpWriteBuf  ptrDst)  const;
 
     //----------------------------------------------------------------
     /**   イメージを作成する。
