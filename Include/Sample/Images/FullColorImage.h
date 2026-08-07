@@ -176,6 +176,35 @@ public:
 
 //========================================================================
 //
+//    Public Member Functions (Static).
+//
+public:
+
+    //----------------------------------------------------------------
+    /**   行当たりのバイト数を計算する。
+    **
+    **/
+    static  inline  LenUnitType
+    computeBytesPerPixel(
+            const  PosUnitType  nWidth,
+            const  LenUnitType  cbPixel)
+    {
+        return ( (nWidth * cbPixel + 3) / 4 );
+    }
+
+    //----------------------------------------------------------------
+    /**   ピクセル当たりのバイト数を計算する。
+    **
+    **/
+    static  inline  LenUnitType
+    computeBytesPerPixel(
+            const  LenUnitType  nDepth)
+    {
+        return ( (nDepth + 7) / 8 );
+    }
+
+//========================================================================
+//
 //    Accessors.
 //
 public:
