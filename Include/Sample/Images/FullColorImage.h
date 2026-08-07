@@ -195,7 +195,7 @@ public:
             const  PosUnitType  nWidth,
             const  LenUnitType  cbPixel)
     {
-        return ( (nWidth * cbPixel + 3) / 4 );
+        return ( (nWidth * cbPixel + 3) & ~3 );
     }
 
     //----------------------------------------------------------------
@@ -206,7 +206,7 @@ public:
     computeBytesPerPixel(
             const  LenUnitType  nDepth)
     {
-        return ( (nDepth + 7) / 8 );
+        return ( (nDepth + 7) >> 3 );
     }
 
 //========================================================================
