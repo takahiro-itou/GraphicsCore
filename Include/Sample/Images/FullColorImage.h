@@ -115,6 +115,34 @@ public:
             const  LenUnitType  lStride = 0);
 
     //----------------------------------------------------------------
+    /**   バッファの内容を単純にコピーする。
+    **
+    **/
+    virtual  void
+    copyBuffer(
+            LpWriteBuf  ptrDst);
+
+    //----------------------------------------------------------------
+    /**   イメージをコピーする。
+    **
+    **/
+    virtual  void
+    copyImage(
+            const  FullColorImage  &imgSrc);
+
+    //----------------------------------------------------------------
+    /**   イメージの指定範囲をコピーする。
+    **
+    **/
+    virtual  void
+    copyRectangle(
+            const  FullColorImage  &imgSrc,
+            const  PosUnitType      x1,
+            const  PosUnitType      y1,
+            const  PosUnitType      x2,
+            const  PosUnitType      y2);
+
+    //----------------------------------------------------------------
     /**   イメージを作成する。
     **
     **  @param [in] nWidth    イメージの幅
@@ -149,6 +177,7 @@ public:
     **/
     virtual  void
     freeImageBuffer();
+
 
 //========================================================================
 //
@@ -208,6 +237,7 @@ public:
     {
         return ( (nDepth + 7) >> 3 );
     }
+
 
 //========================================================================
 //

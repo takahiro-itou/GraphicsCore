@@ -119,6 +119,40 @@ FullColorImage::allocateImage(
 }
 
 //----------------------------------------------------------------
+//    バッファの内容を単純にコピーする。
+//
+
+void
+FullColorImage::copyBuffer(
+        LpWriteBuf  ptrDst)
+{
+}
+
+//----------------------------------------------------------------
+//    イメージをコピーする。
+//
+
+void
+FullColorImage::copyImage(
+        const  FullColorImage  &imgSrc)
+{
+}
+
+//----------------------------------------------------------------
+//    イメージの指定範囲をコピーする。
+//
+
+void
+FullColorImage::copyRectangle(
+        const  FullColorImage  &imgSrc,
+        const  PosUnitType      x1,
+        const  PosUnitType      y1,
+        const  PosUnitType      x2,
+        const  PosUnitType      y2)
+{
+}
+
+//----------------------------------------------------------------
 //    イメージを作成する。
 //
 
