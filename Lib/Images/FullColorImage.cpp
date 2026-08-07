@@ -108,8 +108,8 @@ FullColorImage::allocateImage(
     cbSize  = (wStride >= 0 ? wStride : -wStride) * nHeight;
     ptrBuf  = new BtByte [cbSize];
 
-    this->createImage(nWidth, nHeight, cbSize, wStride, ptr);
-    return ( this->m_lpAlloc = ptr );
+    this->createImage(nWidth, nHeight, cbSize, wStride, ptrBuf);
+    return ( this->m_lpAlloc = ptrBuf );
 }
 
 //----------------------------------------------------------------
