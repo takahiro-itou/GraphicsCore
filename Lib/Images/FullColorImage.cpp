@@ -49,6 +49,7 @@ FullColorImage::FullColorImage()
       m_cbPixel(3),
       m_lStride(0),
       m_lpBits(nullptr),
+      m_lpAlloc(nullptr),
       m_lpOrig(nullptr)
 {
 }
@@ -81,6 +82,27 @@ FullColorImage::~FullColorImage()
 //
 //    Public Member Functions (Virtual Functions).
 //
+
+//----------------------------------------------------------------
+//    イメージを作成する。
+//
+
+FullColorImage::LpWriteBuf
+FullColorImage::allocateImage(
+        const  PosUnitType  nWidth,
+        const  PosUnitType  nHeight,
+        const  LenUnitType  cbPixel,
+        const  LenUnitType  lStride)
+{
+    LpWriteBuf  ptr     = nullptr;
+    LenUnitType cbSize  = 0;
+
+    cbSize  = lStride * nHeight;
+    ptr = new BtByte [cbSize];
+
+    this->createImage(nWidth, nHeight, cbSize, lStride, ptr);
+    return ( this->m_lpAlloc = ptr );
+}
 
 //----------------------------------------------------------------
 //    イメージを作成する。

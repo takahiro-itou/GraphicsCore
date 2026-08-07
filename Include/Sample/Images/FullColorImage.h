@@ -106,6 +106,21 @@ public:
     **  @param [in] nHeight   イメージの高さ
     **  @param [in] cbPixel   ピクセル当たりのバイト数。
     **  @param [in] lStride   行当たりのバイト数。
+    **/
+    virtual  LpWriteBuf
+    allocateImage(
+            const  PosUnitType  nWidth,
+            const  PosUnitType  nHeight,
+            const  LenUnitType  cbPixel,
+            const  LenUnitType  lStride = 0);
+
+    //----------------------------------------------------------------
+    /**   イメージを作成する。
+    **
+    **  @param [in] nWidth    イメージの幅
+    **  @param [in] nHeight   イメージの高さ
+    **  @param [in] cbPixel   ピクセル当たりのバイト数。
+    **  @param [in] lStride   行当たりのバイト数。
     **  @param [in] lpBits    イメージデータ。
     **/
     virtual  void
@@ -238,6 +253,9 @@ private:
     LenUnitType         m_lStride;
 
     LpWritePixelBuf     m_lpBits;
+
+    /**   確保したメモリバッファ。  **/
+    LpWriteBuf          m_lpAlloc;
 
     /**   原点に対応するアドレス。  **/
     LpWritePixelBuf     m_lpOrig;
