@@ -48,8 +48,9 @@ FullColorImage::FullColorImage()
       m_iHeight(0),
       m_cbPixel(3),
       m_lStride(0),
-      m_lpBits(nullptr),
       m_lpAlloc(nullptr),
+      m_cbAlloc(0),
+      m_lpBits(nullptr),
       m_lpOrig(nullptr)
 {
 }
@@ -95,18 +96,23 @@ FullColorImage::allocateImage(
         const  LenUnitType  cbPixel,
         const  LenUnitType  lStride)
 {
-    LpWritePixelBuf ptrBuf  = nullptr;
+    LpWritePixelBuf ptrBuf  = this->m_lpAlloc;
     LenUnitType     cbSize  = 0;
     LenUnitType     wStride = lStride;
 
-    freeImageBuffer();
-
-
+    //  イメージバッファに必要なサイズを計算する。  //
     if ( wStride == 0 ) {
         wStride = computeBytesPerPixel(nWidth, cbPixel);
     }
     cbSize  = (wStride >= 0 ? wStride : -wStride) * nHeight;
-    ptrBuf  = new BtByte [cbSize];
+
+    //  現在確保しているサイズが必要量以上なら再利用。  //
+    if ( this->m_cbAlloc < cbSize ) {
+        //  サイズが足りないので解放して再度確保する。  //
+        freeImageBuffer();
+        ptrBuf  = new BtByte [cbSize];
+        this->m_cbAlloc = cbSize;
+    }
 
     this->createImage(nWidth, nHeight, cbSize, wStride, ptrBuf);
     return ( this->m_lpAlloc = ptrBuf );
@@ -179,10 +185,11 @@ FullColorImage::freeImageBuffer()
     }
 
     delete  [] ptr;
+    this->m_lpAlloc = nullptr;
+    this->m_cbAlloc = 0;
 
     this->m_lpBits  = nullptr;
     this->m_lpOrig  = nullptr;
-    this->m_lpAlloc = nullptr;
 }
 
 
