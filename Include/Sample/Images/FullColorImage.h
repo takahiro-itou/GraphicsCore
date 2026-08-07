@@ -245,15 +245,24 @@ public:
 //
 public:
 
-    inline  const   OffsetType
-    getOffset(
-            const  PosUnitType  x,
-            const  PosUnitType  y)  const
+    //----------------------------------------------------------------
+    /**   ピクセル当たりのバイト数を取得する。
+    **
+    **/
+    inline  LenUnitType
+    getBytesPerPixel()  const
     {
-        // return ( (this->m_iHeight - y - 1) * (this->m_lStride)
-        //          + ((this->m_cbPixel) * x)
-        // );
-        return ( (y) * (this->m_lStride) + ((this->m_cbPixel) * x) );
+        return ( this->m_cbPixel );
+    }
+
+    //----------------------------------------------------------------
+    /**   画像の高さを取得する。
+    **
+    **/
+    inline  PosUnitType
+    getHeight()  const
+    {
+        return ( this->m_iHeight );
     }
 
     inline  LpcReadPixelBuf
@@ -266,6 +275,14 @@ public:
     getImage()
     {
         return ( this->m_lpBits );
+    }
+
+    inline  const   OffsetType
+    getOffset(
+            const  PosUnitType  x,
+            const  PosUnitType  y)  const
+    {
+        return ( (y) * (this->m_lStride) + ((this->m_cbPixel) * x) );
     }
 
     inline  LpcReadPixelBuf
@@ -294,6 +311,26 @@ public:
             const  PosUnitType  y)
     {
         return ( this->m_lpOrig + getOffset(x, y) );
+    }
+
+    //----------------------------------------------------------------
+    /**   行当たりのバイト数（ストライド）を取得する。
+    **
+    **/
+    inline  LenUnitType
+    getStride()  const
+    {
+        return ( this->m_lStride );
+    }
+
+    //----------------------------------------------------------------
+    /**   画像の幅を取得する。
+    **
+    **/
+    inline  PosUnitType
+    getWidth()  const
+    {
+        return ( this->m_iWidth );
     }
 
 //========================================================================
