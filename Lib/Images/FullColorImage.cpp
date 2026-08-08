@@ -114,10 +114,11 @@ FullColorImage::allocateImage(
         //  サイズが足りないので解放して再度確保する。  //
         freeImageBuffer();
         ptrBuf  = new BtByte [cbSize];
+        std::memset(ptrBuf, 0, cbSize);
         this->m_cbAlloc = cbSize;
     }
 
-    this->createImage(nWidth, nHeight, cbSize, wStride, ptrBuf);
+    this->createImage(nWidth, nHeight, cbPixel, wStride, ptrBuf);
     return ( this->m_lpAlloc = ptrBuf );
 }
 
@@ -152,6 +153,7 @@ FullColorImage::copyImage(
     if ( canCopyBuffer(imgSrc) ) {
         //  単純コピーが可能。  //
         imgSrc.copyToBuffer(this->m_lpBits);
+        return;
     }
 
     //  画像の小さいほうに合わせて、矩形コピーを実行。  //
