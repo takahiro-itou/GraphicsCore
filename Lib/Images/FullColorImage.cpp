@@ -20,6 +20,9 @@
 
 #include    "Sample/Images/FullColorImage.h"
 
+#include    <algorithm>
+#include    <cstring>
+
 
 SAMPLE_NAMESPACE_BEGIN
 namespace  Images  {
@@ -48,6 +51,8 @@ FullColorImage::FullColorImage()
       m_iHeight(0),
       m_cbPixel(3),
       m_lStride(0),
+      m_lpAlloc(nullptr),
+      m_cbAlloc(0),
       m_lpBits(nullptr),
       m_lpOrig(nullptr)
 {
@@ -60,6 +65,7 @@ FullColorImage::FullColorImage()
 
 FullColorImage::~FullColorImage()
 {
+    freeImageBuffer();
 }
 
 //========================================================================
@@ -81,6 +87,132 @@ FullColorImage::~FullColorImage()
 //
 //    Public Member Functions (Virtual Functions).
 //
+
+//----------------------------------------------------------------
+//    イメージを作成する。
+//
+
+FullColorImage::LpWriteBuf
+FullColorImage::allocateImage(
+        const  PosUnitType  nWidth,
+        const  PosUnitType  nHeight,
+        const  LenUnitType  cbPixel,
+        const  LenUnitType  lStride)
+{
+    LpWritePixelBuf ptrBuf  = this->m_lpAlloc;
+    LenUnitType     cbSize  = 0;
+    LenUnitType     wStride = lStride;
+
+    //  イメージバッファに必要なサイズを計算する。  //
+    if ( wStride == 0 ) {
+        wStride = computeBytesPerPixel(nWidth, cbPixel);
+    }
+    cbSize  = (wStride >= 0 ? wStride : -wStride) * nHeight;
+
+    //  現在確保しているサイズが必要量以上なら再利用。  //
+    if ( this->m_cbAlloc < cbSize ) {
+        //  サイズが足りないので解放して再度確保する。  //
+        freeImageBuffer();
+        ptrBuf  = new BtByte [cbSize];
+        std::memset(ptrBuf, 0, cbSize);
+        this->m_cbAlloc = cbSize;
+    }
+
+    this->createImage(nWidth, nHeight, cbPixel, wStride, ptrBuf);
+    return ( this->m_lpAlloc = ptrBuf );
+}
+
+//----------------------------------------------------------------
+//    バッファの単純コピーができるか確認する。
+//
+
+bool
+FullColorImage::canCopyBuffer(
+        const  FullColorImage  &imgSrc)  const
+{
+    if ( this->m_lStride != imgSrc.m_lStride ) { return  false; }
+    if ( this->m_iWidth  != imgSrc.m_iWidth  ) { return  false; }
+    if ( this->m_iHeight != imgSrc.m_iHeight ) { return  false; }
+
+    return ( true );
+}
+
+//----------------------------------------------------------------
+//    イメージをコピーする。
+//
+
+void
+FullColorImage::copyImage(
+        const  FullColorImage  &imgSrc)
+{
+    if ( this->m_lpBits == imgSrc.m_lpBits ) {
+        //  コピー元とコピー先が同じなので何もしない。  //
+        return;
+    }
+
+    if ( canCopyBuffer(imgSrc) ) {
+        //  単純コピーが可能。  //
+        imgSrc.copyToBuffer(this->m_lpBits);
+        return;
+    }
+
+    //  画像の小さいほうに合わせて、矩形コピーを実行。  //
+    const  PosUnitType  x2  = std::min(this->m_iWidth,  imgSrc.m_iWidth );
+    const  PosUnitType  y2  = std::min(this->m_iHeight, imgSrc.m_iHeight);
+    this->copyRectangle(imgSrc, 0, 0, x2, y2);
+}
+
+//----------------------------------------------------------------
+//    イメージの指定範囲をコピーする。
+//
+
+void
+FullColorImage::copyRectangle(
+        const  FullColorImage  &imgSrc,
+        const  PosUnitType      x1,
+        const  PosUnitType      y1,
+        const  PosUnitType      x2,
+        const  PosUnitType      y2)
+{
+    const  LenUnitType  cbCopy  = std::min(this->m_cbPixel, imgSrc.m_cbPixel);
+    const  LenUnitType  remDst  = this->m_cbPixel - cbCopy;
+    const  LenUnitType  remSrc  = imgSrc.m_cbPixel - cbCopy;
+
+    for ( PosUnitType y = y1; y < y2; ++ y ) {
+        LpWritePixelBuf  ptrDst = getPixel(x1, y);
+        LpcReadPixelBuf  ptrSrc = getPixel(x1, y);
+        for ( PosUnitType x = x1; x < x2; ++ x ) {
+            switch ( cbCopy ) {
+            case  4:
+                *(ptrDst++) = *(ptrSrc++);
+                //  no break;
+            case  3:
+                *(ptrDst++) = *(ptrSrc++);
+                //  no break;
+            case  2:
+                *(ptrDst++) = *(ptrSrc++);
+                //  no break;
+            case  1:
+                *(ptrDst++) = *(ptrSrc++);
+                //  no break;
+            }
+            ptrDst  += remDst;
+            ptrSrc  += remSrc;
+        }
+    }
+}
+
+//----------------------------------------------------------------
+//    バッファの内容を単純にコピーする。
+//
+
+void
+FullColorImage::copyToBuffer(
+        LpWriteBuf  ptrDst)  const
+{
+    const  LenUnitType  cbCopy  = this->m_lStride * this->m_iHeight;
+    std::memcpy(ptrDst, this->m_lpBits, cbCopy);
+}
 
 //----------------------------------------------------------------
 //    イメージを作成する。
@@ -135,6 +267,27 @@ FullColorImage::drawSample(
     fillTriangle(rW * 1, rH * 2, rW * 1 + rW, rH * 2 + rH, colBL);
     fillTriangle(rW * 2, rH * 2, rW * 2 + rW, rH * 2 + rH, colBR);
 }
+
+//----------------------------------------------------------------
+//    確保したバッファを解放する。
+//
+
+void
+FullColorImage::freeImageBuffer()
+{
+    LpWritePixelBuf ptr = this->m_lpAlloc;
+    if ( ptr == nullptr ) {
+        return;
+    }
+
+    delete  [] ptr;
+    this->m_lpAlloc = nullptr;
+    this->m_cbAlloc = 0;
+
+    this->m_lpBits  = nullptr;
+    this->m_lpOrig  = nullptr;
+}
+
 
 //========================================================================
 //
